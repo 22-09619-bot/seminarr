@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning Portfolio | Electrical Engineering</title>
+  <style>
+    :root {
+      --ink: #18222f;
+      --paper: #f8f3ea;
+      --paper-2: #fffaf1;
+      --card: #ffffff;
+      --muted: #697789;
+      --orange: #f97316;
+      --blue: #2563eb;
+      --teal: #0f766e;
+      --violet: #7c3aed;
+      --line: rgba(24, 34, 47, 0.12);
+      --shadow: 0 22px 60px rgba(24, 34, 47, 0.13);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(249, 115, 22, 0.16), transparent 26%),
+        radial-gradient(circle at 92% 12%, rgba(37, 99, 235, 0.14), transparent 28%),
+        linear-gradient(180deg, var(--paper), #f2eadc 55%, #efe4d2);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; border-radius: 22px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px;
+      background: #162033;
+      color: white;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .logo-mark {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 1.7rem;
+      background: linear-gradient(135deg, var(--orange), #facc15);
+      color: #111827;
+      font-weight: 900;
+    }
+
+    .logo h1 {
+      font-size: 1.25rem;
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+    }
+
+    .logo p { color: #b9c4d6; font-size: 0.9rem; }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 28px;
+    }
+
+    .nav a {
+      padding: 11px 12px;
+      border-radius: 14px;
+      color: #dce6f5;
+      font-weight: 700;
+      font-size: 0.93rem;
+      border: 1px solid transparent;
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.12);
+      color: white;
+    }
+
+    .side-note {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #d2ddeb;
+      font-size: 0.9rem;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .section {
+      width: min(1160px, 92%);
+      margin: auto;
+      padding: 82px 0;
+    }
+
+    .hero {
+      width: min(1160px, 92%);
+      margin: auto;
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding: 52px 0;
+    }
+
+    .hero-board {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .intro-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 42px;
+      padding: clamp(28px, 5vw, 58px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-panel::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(249, 115, 22, 0.13);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: #fff4e8;
+      color: #9a3412;
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 22px;
+      border: 1px solid #fed7aa;
+    }
+
+    .intro-panel h2 {
+      font-size: clamp(2.6rem, 7vw, 6.4rem);
+      line-height: 0.9;
+      letter-spacing: -4px;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 1.06rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      min-height: 48px;
+      border-radius: 16px;
+      font-weight: 900;
+      border: 1px solid var(--line);
+      transition: 0.2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { background: var(--ink); color: white; box-shadow: 0 16px 35px rgba(24,34,47,0.22); }
+    .button.light { background: #fff8ed; color: var(--ink); }
+
+    .snapshot-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .photo-tile,
+    .identity-tile,
+    .count-tile {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .photo-tile {
+      min-height: 290px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(15,118,110,0.15), rgba(37,99,235,0.12)),
+        #ffffff;
+    }
+
+    .photo-tile strong { font-size: 4rem; display: block; }
+    .photo-tile p { color: var(--muted); max-width: 300px; margin: 8px auto 0; }
+
+    .identity-tile,
+    .count-tile {
+      padding: 22px;
+    }
+
+    .identity-tile h3,
+    .count-tile h3 { font-size: 1.1rem; margin-bottom: 8px; }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .fact {
+      background: #162033;
+      color: white;
+      border-radius: 22px;
+      padding: 19px;
+      min-height: 120px;
+    }
+
+    .fact b { display: block; font-size: 2rem; line-height: 1; margin-bottom: 8px; color: #fbbf24; }
+    .fact span { color: #d4deea; font-size: 0.9rem; }
+
+    .heading {
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 32px;
+    }
+
+    .kicker {
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .heading h2,
+    .full-heading h2 {
+      font-size: clamp(2rem, 4.5vw, 4rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+    }
+
+    .heading p,
+    .full-heading p { color: var(--muted); }
+    .full-heading { max-width: 820px; margin-bottom: 32px; }
+
+    .profile-card {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 22px;
+    }
+
+    .portrait-box {
+      background: #162033;
+      border-radius: 36px;
+      min-height: 430px;
+      padding: 28px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .portrait-box .icon { font-size: 5rem; display: block; margin-bottom: 10px; }
+    .portrait-box p { color: #ccd8e7; }
+
+    .profile-info {
+      display: grid;
+      gap: 18px;
+    }
+
+    .profile-main,
+    .profile-detail {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .profile-main h3 { font-size: 2rem; letter-spacing: -1px; margin-bottom: 8px; }
+    .muted { color: var(--muted); }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .detail {
+      padding: 15px;
+      border-radius: 18px;
+      background: #faf4eb;
+      border: 1px solid #eadfce;
+    }
+
+    .detail small { display: block; color: var(--muted); font-weight: 800; }
+    .detail b { display: block; margin-top: 4px; }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .matrix-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      min-height: 235px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .matrix-card:nth-child(1) { border-top: 8px solid var(--orange); }
+    .matrix-card:nth-child(2) { border-top: 8px solid var(--blue); }
+    .matrix-card:nth-child(3) { border-top: 8px solid var(--teal); }
+    .matrix-card:nth-child(4) { border-top: 8px solid var(--violet); }
+
+    .matrix-card .symbol {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: #f5ead9;
+      font-size: 1.35rem;
+    }
+
+    .pathway {
+      display: grid;
+      gap: 16px;
+    }
+
+    .path-item {
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      gap: 18px;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 18px;
+      box-shadow: 0 12px 35px rgba(24,34,47,0.08);
+    }
+
+    .date-chip {
+      padding: 12px;
+      border-radius: 18px;
+      background: #162033;
+      color: white;
+      text-align: center;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .date-chip span { display: block; color: #fbbf24; font-size: 0.84rem; }
+    .path-item h3 { margin-bottom: 4px; }
+    .path-item p { color: var(--muted); }
+    .arrow { color: var(--orange); font-size: 1.5rem; font-weight: 900; padding-right: 6px; }
+
+    .capsules {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .capsule {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .capsule-top {
+      min-height: 132px;
+      padding: 22px;
+      color: white;
+      display: grid;
+      align-content: end;
+      background: linear-gradient(135deg, #162033, #31425f);
+    }
+
+    .capsule:nth-child(2n) .capsule-top { background: linear-gradient(135deg, #0f766e, #14b8a6); }
+    .capsule:nth-child(3n) .capsule-top { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+    .capsule:nth-child(4n) .capsule-top { background: linear-gradient(135deg, #ea580c, #facc15); color: #251505; }
+
+    .capsule-top .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 900;
+      opacity: 0.8;
+    }
+
+    .capsule-body {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .topic-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .topic-tags span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f4ecde;
+      color: #344154;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .learned {
+      padding: 16px;
+      border-radius: 20px;
+      background: #f9f2e7;
+      border: 1px solid #eadfce;
+    }
+
+    .learned b { color: #9a3412; }
+
+    .evidence-wall {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .artifact {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .artifact-visual {
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      background: #162033;
+      color: white;
+      font-size: 3rem;
+    }
+
+    .artifact:nth-child(2n) .artifact-visual { background: #0f766e; }
+    .artifact:nth-child(3n) .artifact-visual { background: #7c3aed; }
+    .artifact-body { padding: 20px; }
+    .artifact-body p { color: var(--muted); margin-top: 6px; }
+
+    .reflection {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .reflection-card {
+      background: #162033;
+      color: white;
+      border-radius: 36px;
+      padding: clamp(26px, 4vw, 42px);
+      box-shadow: var(--shadow);
+    }
+
+    .reflection-card p { color: #d4deea; margin-top: 14px; }
+
+    .growth-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .growth-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 12px 35px rgba(24,34,47,0.08);
+    }
+
+    .growth-item b { display: block; margin-bottom: 4px; }
+    .growth-item p { color: var(--muted); }
+
+    footer {
+      width: min(1160px, 92%);
+      margin: auto;
+      padding: 34px 0 52px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .top-link {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--ink);
+      color: white;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 1040px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+      }
+      .nav { grid-template-columns: repeat(4, 1fr); }
+      .hero { min-height: auto; }
+      .hero-board,
+      .heading,
+      .profile-card,
+      .reflection { grid-template-columns: 1fr; }
+      .quick-facts,
+      .matrix { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .section { padding: 58px 0; }
+      .nav { grid-template-columns: repeat(2, 1fr); }
+      .quick-facts,
+      .matrix,
+      .capsules,
+      .evidence-wall,
+      .detail-grid { grid-template-columns: 1fr; }
+      .path-item { grid-template-columns: 1fr; }
+      .arrow { display: none; }
+      .intro-panel h2 { letter-spacing: -2px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-mark">EE</div>
+        <div>
+          <h1>Learning Portfolio</h1>
+          <p>Seminars • Colloquia • Reflections</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Portfolio navigation">
+        <a href="#home">Dashboard</a>
+        <a href="#profile">Learner Profile</a>
+        <a href="#matrix">Learning Matrix</a>
+        <a href="#pathway">Journey Path</a>
+        <a href="#capsules">Event Capsules</a>
+        <a href="#evidence">Artifacts Wall</a>
+        <a href="#reflection">Final Reflection</a>
+      </nav>
+
+      <div class="side-note">
+        <b>Reminder:</b> Replace all bracketed text, add your own screenshots, and adjust the event details based on your actual attendance records.
+      </div>
+    </aside>
+
+    <main class="main" id="home">
+      <section class="hero">
+        <div class="hero-board">
+          <div class="intro-panel">
+            <span class="tag">⚡ Electrical Engineering Portfolio</span>
+            <h2>Learning as a Future Engineer</h2>
+            <p class="hero-copy">
+              This portfolio is designed as a personal learning dashboard. It presents the seminars, colloquia, insights, evidence, and reflections that helped shape my understanding of electrical engineering as a technical, creative, ethical, and service-oriented profession.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#capsules">Explore Events</a>
+              <a class="button light" href="#evidence">View Evidence</a>
+            </div>
+          </div>
+
+          <div class="snapshot-panel">
+            <div class="photo-tile">
+              <div>
+                <strong>📚</strong>
+                <h3>Portfolio Cover Image</h3>
+                <p>Use this area for a collage, seminar poster, campus photo, or personal learning graphic.</p>
+              </div>
+            </div>
+            <div class="identity-tile">
+              <h3>[Your Name]</h3>
+              <p class="muted">BS Electrical Engineering • [Year Level] • [Section]</p>
+            </div>
+            <div class="count-tile">
+              <h3>Portfolio Focus</h3>
+              <p class="muted">Technical learning, research appreciation, documentation, reflection, and professional growth.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-facts" aria-label="Portfolio summary facts">
+          <div class="fact"><b>08</b><span>documented events</span></div>
+          <div class="fact"><b>04</b><span>learning dimensions</span></div>
+          <div class="fact"><b>01</b><span>growth reflection</span></div>
+          <div class="fact"><b>∞</b><span>skills to develop</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="profile">
+        <div class="heading">
+          <div>
+            <p class="kicker">Learner Profile</p>
+            <h2>The student behind the portfolio</h2>
+          </div>
+          <p>
+            This section gives context about the learner, the academic program, and the purpose of the portfolio. Edit the details below to match your own information.
+          </p>
+        </div>
+
+        <div class="profile-card">
+          <div class="portrait-box">
+            <div>
+              <span class="icon">👤</span>
+              <h3>Insert Photo</h3>
+              <p>Replace this with your formal photo or an image that represents your learning journey.</p>
+            </div>
+          </div>
+
+          <div class="profile-info">
+            <div class="profile-main">
+              <h3>[Your Name]</h3>
+              <p class="muted">Bachelor of Science in Electrical Engineering</p>
+              <p style="margin-top: 16px;">
+                I created this learning portfolio to organize what I learned from seminars and colloquia. Each entry reflects the technical concepts, personal insights, practical applications, and professional values I gained as a future electrical engineer.
+              </p>
+            </div>
+
+            <div class="profile-detail">
+              <h3>Academic Information</h3>
+              <div class="detail-grid">
+                <div class="detail"><small>Student Name</small><b>[Your Name]</b></div>
+                <div class="detail"><small>Program</small><b>BS Electrical Engineering</b></div>
+                <div class="detail"><small>Year and Section</small><b>[Year and Section]</b></div>
+                <div class="detail"><small>Institution</small><b>[School Name]</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="matrix">
+        <div class="full-heading">
+          <p class="kicker">Learning Matrix</p>
+          <h2>How the portfolio is organized</h2>
+          <p>This design uses four learning dimensions instead of copying the original page layout. Each seminar entry can be analyzed using these categories.</p>
+        </div>
+
+        <div class="matrix">
+          <article class="matrix-card">
+            <div class="symbol">🧠</div>
+            <h3>Concepts</h3>
+            <p class="muted">The technical ideas, engineering principles, and research topics introduced during the events.</p>
+          </article>
+          <article class="matrix-card">
+            <div class="symbol">🛠️</div>
+            <h3>Applications</h3>
+            <p class="muted">The practical ways each lesson can be connected to design, maintenance, safety, automation, and energy systems.</p>
+          </article>
+          <article class="matrix-card">
+            <div class="symbol">🌱</div>
+            <h3>Values</h3>
+            <p class="muted">The professional attitudes developed, including discipline, responsibility, ethics, teamwork, and service.</p>
+          </article>
+          <article class="matrix-card">
+            <div class="symbol">📎</div>
+            <h3>Evidence</h3>
+            <p class="muted">Screenshots, attendance proof, notes, certificates, photos, and other documentation that support the learning entries.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="pathway">
+        <div class="heading">
+          <div>
+            <p class="kicker">Journey Path</p>
+            <h2>Seminar route map</h2>
+          </div>
+          <p>The timeline has been redesigned as a route map. You can edit the titles and dates depending on your actual event list.</p>
+        </div>
+
+        <div class="pathway">
+          <article class="path-item"><div class="date-chip"><span>FEB</span>20</div><div><h3>UplEEft</h3><p>Professional readiness, human skills, SCADA, and renewable energy awareness.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>MAR</span>13</div><div><h3>ENGrained</h3><p>Research innovation, automation, underground distribution, charging systems, and PLC learning.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>MAR</span>27</div><div><h3>FrontiEErs</h3><p>Maintenance, operation, resilience, work-life balance, and professional realities.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>APR</span>01</div><div><h3>FrontiEErs 2.0</h3><p>Voltage drop, electrical design, mixed-use buildings, and energy management systems.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>APR</span>10</div><div><h3>Elecsynapse</h3><p>Smart systems, solar tracking, smart plugs, wind turbine lighting, and cabling.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>APR</span>24</div><div><h3>EUREEKA</h3><p>Digital services, study support, bottle processing, power transfer, and hydro concepts.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>MAY</span>08</div><div><h3>NIKOLAS</h3><p>Automation, pneumatics, solar drying, water resilience, solar walkways, and school EMS.</p></div><div class="arrow">→</div></article>
+          <article class="path-item"><div class="date-chip"><span>MAY</span>15</div><div><h3>EEHIVE</h3><p>Sustainable agriculture, solar irrigation, electroculture, power factor correction, and simulation.</p></div><div class="arrow">✓</div></article>
+        </div>
+      </section>
+
+      <section class="section" id="capsules">
+        <div class="full-heading">
+          <p class="kicker">Event Capsules</p>
+          <h2>Compact learning entries</h2>
+          <p>Instead of copying the example's page-by-page event format, this version uses card-based capsules. Each capsule contains topics, learning, and application notes.</p>
+        </div>
+
+        <div class="capsules">
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 01</span><h3>UplEEft</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This event emphasized that engineers need both technical knowledge and human skills to succeed in the profession.</p>
+              <div class="topic-tags"><span>SCADA</span><span>Professional Growth</span><span>Renewable Energy</span></div>
+              <div class="learned"><b>My takeaway:</b> I should develop discipline, communication, and technical curiosity alongside classroom knowledge.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 02</span><h3>ENGrained</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This colloquium highlighted how research can transform simple ideas into useful engineering solutions.</p>
+              <div class="topic-tags"><span>Automation</span><span>Charging</span><span>Distribution</span><span>PLC</span></div>
+              <div class="learned"><b>My takeaway:</b> Good research begins with a real problem and becomes stronger through testing, documentation, and practical design.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 03</span><h3>FrontiEErs</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This session focused on engineering work environments, maintenance, reliability, and mental preparedness.</p>
+              <div class="topic-tags"><span>Maintenance</span><span>Operation</span><span>Resilience</span></div>
+              <div class="learned"><b>My takeaway:</b> Engineering practice requires responsibility, consistency, teamwork, and the ability to handle pressure.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 04</span><h3>FrontiEErs 2.0</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This event strengthened my understanding of design calculations and facility-based energy decisions.</p>
+              <div class="topic-tags"><span>Voltage Drop</span><span>Electrical Design</span><span>EMS</span></div>
+              <div class="learned"><b>My takeaway:</b> Electrical design must be accurate, safe, efficient, and suitable for the actual use of the building.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 05</span><h3>Elecsynapse</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This event presented smart systems and automation concepts that connect electrical engineering with everyday needs.</p>
+              <div class="topic-tags"><span>Smart Plug</span><span>Solar Tracking</span><span>Cabling</span></div>
+              <div class="learned"><b>My takeaway:</b> Innovation is more useful when it is practical, measurable, energy-conscious, and easy for users to understand.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 06</span><h3>EUREEKA</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This event showed how engineering and technology can support education, public service, and sustainability.</p>
+              <div class="topic-tags"><span>StudyHub</span><span>iBarangay</span><span>Hydro</span><span>Recycling</span></div>
+              <div class="learned"><b>My takeaway:</b> Engineering solutions should consider the user, the community, and the long-term maintenance of the system.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 07</span><h3>NIKOLAS</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This colloquium explored next-generation systems involving automation, solar applications, and school energy management.</p>
+              <div class="topic-tags"><span>SolarDry</span><span>Pneumatics</span><span>Water Resilience</span><span>EMS</span></div>
+              <div class="learned"><b>My takeaway:</b> Renewable energy and automation can create practical solutions for homes, schools, and communities.</div>
+            </div>
+          </article>
+
+          <article class="capsule">
+            <div class="capsule-top"><span class="label">Seminar 08</span><h3>EEHIVE</h3></div>
+            <div class="capsule-body">
+              <p class="muted">This event connected electrical engineering with agriculture, power quality, simulation, and smart control.</p>
+              <div class="topic-tags"><span>Solar Irrigation</span><span>Power Factor</span><span>Electroculture</span><span>Simulation</span></div>
+              <div class="learned"><b>My takeaway:</b> Electrical engineering can support food production, energy efficiency, and sustainable community systems.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="evidence">
+        <div class="heading">
+          <div>
+            <p class="kicker">Artifacts Wall</p>
+            <h2>Evidence of participation</h2>
+          </div>
+          <p>Replace these placeholders with actual screenshots, photos, posters, notes, or certificates. Add image files in an assets folder and use standard image tags.</p>
+        </div>
+
+        <div class="evidence-wall">
+          <article class="artifact"><div class="artifact-visual">🖼️</div><div class="artifact-body"><h3>Event Poster</h3><p>Insert official seminar poster or publicity material.</p></div></article>
+          <article class="artifact"><div class="artifact-visual">💻</div><div class="artifact-body"><h3>Online Screenshot</h3><p>Insert Zoom or livestream participation documentation.</p></div></article>
+          <article class="artifact"><div class="artifact-visual">📝</div><div class="artifact-body"><h3>Learning Notes</h3><p>Insert notes, summaries, or post-event written outputs.</p></div></article>
+          <article class="artifact"><div class="artifact-visual">✅</div><div class="artifact-body"><h3>Attendance Proof</h3><p>Insert registration, attendance, or certificate evidence.</p></div></article>
+          <article class="artifact"><div class="artifact-visual">🎤</div><div class="artifact-body"><h3>Speaker Insights</h3><p>Insert key speaker quotes, topics, or Q&A takeaways.</p></div></article>
+          <article class="artifact"><div class="artifact-visual">📁</div><div class="artifact-body"><h3>Compiled Report</h3><p>Insert screenshots or excerpts from your event report.</p></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="reflection">
+        <div class="reflection">
+          <div class="reflection-card">
+            <p class="kicker">Final Reflection</p>
+            <h2>What this learning journey taught me</h2>
+            <p>
+              These seminars helped me see electrical engineering as more than calculations and technical designs. I learned that engineering work must be purposeful, safe, efficient, sustainable, and useful to people.
+            </p>
+            <p>
+              The experience also reminded me that a future engineer must continue learning. Technologies such as automation, renewable energy systems, energy management, simulation, and smart monitoring keep evolving, so professional growth should never stop.
+            </p>
+          </div>
+
+          <div class="growth-list">
+            <div class="growth-item"><b>Technical awareness</b><p>I became more familiar with topics such as voltage drop, SCADA, PLCs, power quality, solar systems, and automation.</p></div>
+            <div class="growth-item"><b>Research appreciation</b><p>I understood that strong research must respond to real problems and must be supported by testing, data, and clear explanation.</p></div>
+            <div class="growth-item"><b>Professional mindset</b><p>I learned the importance of responsibility, communication, teamwork, resilience, ethics, and continuous improvement.</p></div>
+            <div class="growth-item"><b>Service orientation</b><p>I realized that engineering becomes meaningful when it improves communities and supports sustainable development.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>Learning Portfolio • Electrical Engineering • Prepared by [Your Name]</p>
+      </footer>
+    </main>
+  </div>
+
+  <a class="top-link" href="#home" aria-label="Back to top">↑</a>
+</body>
+</html>
