@@ -129,9 +129,13 @@
 
     .hero-board {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1fr;
       gap: 24px;
       align-items: stretch;
+    }
+
+    .hero-board.single .intro-panel {
+      max-width: 100%;
     }
 
     .intro-panel {
@@ -311,6 +315,20 @@
 
     .portrait-box .icon { font-size: 5rem; display: block; margin-bottom: 10px; }
     .portrait-box p { color: #ccd8e7; }
+
+    .photo-box {
+      background: #ffffff;
+      padding: 18px;
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 24px;
+    }
 
     .profile-info {
       display: grid;
@@ -620,30 +638,25 @@
 
     <main class="main" id="home">
       <section class="hero">
-        <div class="hero-board">
+        <div class="hero-board single">
           <div class="intro-panel">
             <span class="tag">⚡ Electrical Engineering Portfolio</span>
             <h2>Learning as a Future Engineer</h2>
             <p class="hero-copy">
               This portfolio is designed as a personal learning dashboard. It presents the seminars, colloquia, insights, evidence, and reflections that helped shape my understanding of electrical engineering as a technical, creative, ethical, and service-oriented profession.
             </p>
+            <p class="hero-copy" style="margin-top: 16px;">
+              Prepared by <b>Jayvee Mayuga</b> from <b>EE - 4202</b>, Batangas State University - The National Engineering University.
+            </p>
             <div class="hero-actions">
               <a class="button primary" href="#capsules">Explore Events</a>
               <a class="button light" href="#evidence">View Evidence</a>
             </div>
           </div>
-
-          <div class="snapshot-panel">
-            <div class="photo-tile">
-              <div>
-                <strong>📚</strong>
-                <h3>Portfolio Cover Image</h3>
-                <p>Use this area for a collage, seminar poster, campus photo, or personal learning graphic.</p>
-              </div>
-            </div>
+        </div>
             <div class="identity-tile">
               <h3>[Your Name]</h3>
-              <p class="muted">BS Electrical Engineering • [Year Level] • [Section]</p>
+              <p class="muted">BS Electrical Engineering • EE - 4202</p>
             </div>
             <div class="count-tile">
               <h3>Portfolio Focus</h3>
@@ -672,18 +685,14 @@
         </div>
 
         <div class="profile-card">
-          <div class="portrait-box">
-            <div>
-              <span class="icon">👤</span>
-              <h3>Insert Photo</h3>
-              <p>Replace this with your formal photo or an image that represents your learning journey.</p>
-            </div>
+          <div class="portrait-box photo-box">
+            <img src="assets/formal-photo.jpg" alt="Formal photo of Jayvee Mayuga" />
           </div>
 
           <div class="profile-info">
             <div class="profile-main">
               <h3>Jayvee Mayuga</h3>
-              <p class="muted">Bachelor of Science in Electrical Engineering</p>
+              <p class="muted">Bachelor of Science in Electrical Engineering • EE - 4202</p>
               <p style="margin-top: 16px;">
                 I created this learning portfolio to organize what I learned from seminars and colloquia. Each entry reflects the technical concepts, personal insights, practical applications, and professional values I gained as a future electrical engineer.
               </p>
@@ -694,7 +703,7 @@
               <div class="detail-grid">
                 <div class="detail"><small>Student Name</small><b>Jayvee Mayuga</b></div>
                 <div class="detail"><small>Program</small><b>BS Electrical Engineering</b></div>
-                <div class="detail"><small>Year and Section</small><b>EE-4202</b></div>
+                <div class="detail"><small>Year and Section</small><b>EE - 4202</b></div>
                 <div class="detail"><small>Institution</small><b>Batangas State University - The National Engineering University</b></div>
               </div>
             </div>
@@ -878,7 +887,7 @@
       </section>
 
       <footer>
-        <p>Learning Portfolio • Electrical Engineering • Prepared by [Your Name]</p>
+        <p>Learning Portfolio • Electrical Engineering • Prepared by Jayvee Mayuga</p>
       </footer>
     </main>
   </div>
